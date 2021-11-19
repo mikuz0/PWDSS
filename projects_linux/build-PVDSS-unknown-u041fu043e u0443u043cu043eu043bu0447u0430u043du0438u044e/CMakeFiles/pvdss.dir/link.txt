@@ -1,0 +1,1 @@
+/home/mikz-admin/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++    -rdynamic CMakeFiles/pvdss.dir/PVDSS.cpp.o CMakeFiles/pvdss.dir/main.cpp.o  -o pvdss -lQtCore -lQtGui 

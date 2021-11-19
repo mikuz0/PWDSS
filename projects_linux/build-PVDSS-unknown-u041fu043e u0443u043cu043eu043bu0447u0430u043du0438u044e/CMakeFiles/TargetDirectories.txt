@@ -1,0 +1,7 @@
+/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/install/strip.dir
+/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/install/local.dir
+/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/edit_cache.dir
+/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/rebuild_cache.dir
+/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/pvdss.dir
+/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/list_install_components.dir
+/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/install.dir

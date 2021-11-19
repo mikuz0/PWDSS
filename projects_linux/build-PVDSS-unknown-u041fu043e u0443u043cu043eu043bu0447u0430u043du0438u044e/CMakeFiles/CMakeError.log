@@ -1,0 +1,93 @@
+Determining if the Q_WS_WIN exist failed with the following output:
+Change Dir: /home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_b5f8f/fast"
+/usr/bin/make -f CMakeFiles/cmTC_b5f8f.dir/build.make CMakeFiles/cmTC_b5f8f.dir/build
+make[1]: вход в каталог «/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp»
+Building CXX object CMakeFiles/cmTC_b5f8f.dir/CheckSymbolExists.cxx.o
+/home/mikz-admin/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++   -I/usr/include/qt4   -o CMakeFiles/cmTC_b5f8f.dir/CheckSymbolExists.cxx.o -c "/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx"
+/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: use of undeclared identifier 'Q_WS_WIN'
+  return ((int*)(&Q_WS_WIN))[argc];
+                  ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_b5f8f.dir/build.make:66: CMakeFiles/cmTC_b5f8f.dir/CheckSymbolExists.cxx.o] Ошибка 1
+make[1]: выход из каталога «/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp»
+make: *** [Makefile:121: cmTC_b5f8f/fast] Ошибка 2
+
+File /home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_WIN
+  return ((int*)(&Q_WS_WIN))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_QWS exist failed with the following output:
+Change Dir: /home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_9595b/fast"
+/usr/bin/make -f CMakeFiles/cmTC_9595b.dir/build.make CMakeFiles/cmTC_9595b.dir/build
+make[1]: вход в каталог «/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp»
+Building CXX object CMakeFiles/cmTC_9595b.dir/CheckSymbolExists.cxx.o
+/home/mikz-admin/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++   -I/usr/include/qt4   -o CMakeFiles/cmTC_9595b.dir/CheckSymbolExists.cxx.o -c "/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx"
+/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: use of undeclared identifier 'Q_WS_QWS'
+  return ((int*)(&Q_WS_QWS))[argc];
+                  ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_9595b.dir/build.make:66: CMakeFiles/cmTC_9595b.dir/CheckSymbolExists.cxx.o] Ошибка 1
+make[1]: выход из каталога «/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp»
+make: *** [Makefile:121: cmTC_9595b/fast] Ошибка 2
+
+File /home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_QWS
+  return ((int*)(&Q_WS_QWS))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the Q_WS_MAC exist failed with the following output:
+Change Dir: /home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_92afa/fast"
+/usr/bin/make -f CMakeFiles/cmTC_92afa.dir/build.make CMakeFiles/cmTC_92afa.dir/build
+make[1]: вход в каталог «/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp»
+Building CXX object CMakeFiles/cmTC_92afa.dir/CheckSymbolExists.cxx.o
+/home/mikz-admin/Android/Sdk/ndk/21.0.6113669/toolchains/llvm/prebuilt/linux-x86_64/bin/clang++   -I/usr/include/qt4   -o CMakeFiles/cmTC_92afa.dir/CheckSymbolExists.cxx.o -c "/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx"
+/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:8:19: error: use of undeclared identifier 'Q_WS_MAC'
+  return ((int*)(&Q_WS_MAC))[argc];
+                  ^
+1 error generated.
+make[1]: *** [CMakeFiles/cmTC_92afa.dir/build.make:66: CMakeFiles/cmTC_92afa.dir/CheckSymbolExists.cxx.o] Ошибка 1
+make[1]: выход из каталога «/home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp»
+make: *** [Makefile:121: cmTC_92afa/fast] Ошибка 2
+
+File /home/mikz-admin/Yandex.Disk/ElProArc/PVDSS/projects_linux/build-PVDSS-unknown-u041fu043e u0443u043cu043eu043bu0447u0430u043du0438u044e/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <QtCore/qglobal.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef Q_WS_MAC
+  return ((int*)(&Q_WS_MAC))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+

@@ -1,0 +1,640 @@
+ 
+<html>
+<head>
+ <meta charset="cp1251">
+ <link href="jquery-ui.css" rel="stylesheet">
+<!-- 1. Подключим библиотеку jQuery (без нее jQuery UI не будет работать) -->
+<script src="./lib/jquery-ui/external/jquery/jquery.js"></script>
+<!-- 2. Подключим jQuery UI -->
+<link href="./lib/jquery-ui/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script src="./lib/jquery-ui/jquery-ui.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+   $("#tabs").tabs();
+
+});
+</script>
+
+
+
+<Script type="text/javascript" LANGUAGE="JAVASCRIPT" >
+
+var T25,T70,I25,I70,Bq,Kq ;
+
+function UrovnK(X1,X2,Y1,Y2) //Решение системы уровнений
+{
+	K1=(Y2-Y1)/(X2-X1);
+	B1=Y1-K1*X1;
+return K1
+}
+function UrovnB(X1,X2,Y1,Y2) //Решение системы уравнений
+{
+	K1=(Y2-Y1)/(X2-X1);
+	B1=Y1-K1*X1;
+return B1
+}
+
+function XfS(S,T,Kd) //Вычисление проводимости из солесодержания
+{
+A3=T;
+XtchV=0,01112*(1+((9,965*10^-2*A3)+(4,777*10^-4*A3^2))+(8,223*10^-5*A3^3)-(2,878*10^-7*A3^4));
+Kt=1+(0,02*(A3-25))+(0,0000424*(A3-25)^2);
+X=(S*Kt)/Kd+XtchV;
+	
+	return X
+}
+function RaschDAC(Obiekt) {
+// Диапазоны
+	X11=Obiekt.Smin.value ;
+	X22=Obiekt.Smax.value ;
+	Y11=Obiekt.UImin.value  ;
+	Y22=Obiekt.UImax.value ;
+
+		KO=UrovnK(X11,X22,Y11,Y22 );
+		BO=UrovnB(X11,X22,Y11,Y22 );
+
+	X11=Obiekt.SOmin.value ;
+	X22=Obiekt.SOmax.value ;
+	Y11=Obiekt.UIOmin.value  ;
+	Y22=Obiekt.UIOmax.value ;
+
+		K=UrovnK(X11,X22,Y11,Y22 );
+		B=UrovnB(X11,X22,Y11,Y22 );
+	Kpr=K/KO ;
+	Bpr=B-BO ;
+
+	Kdac=Kpr;
+	Bdac=Bpr*Obiekt.Kb.value;
+Obiekt.Bq.value = Bdac.toFixed(4);
+Obiekt.Kq.value = Kdac.toFixed(4);
+};
+
+
+function RaschT(Obiekt) {
+
+//Хорошо
+// пытаемся использовать мокрые наработки
+
+K= Number(Obiekt.TK0.value);
+B= Number(Obiekt.TB0.value);
+
+Tobr25=Number(Obiekt.I25.value)-273.2;
+Tobr70=Number(Obiekt.I70.value)-273.2;
+Tsol25=Number(Obiekt.T25.value);
+Tsol70=Number(Obiekt.T70.value);
+//дальше как на мокрую
+Iobr25=Tobr25+273.2 ;
+Iobr70=Tobr70+273.2 ;
+Ktsol=(Tsol70-Tsol25)/(Iobr70-Iobr25) ;
+Btsol=Tsol25-Ktsol*Iobr25 ;
+
+
+X1t=(Ktsol*Iobr25+Btsol-25)/10.012 ;
+X2t=(Ktsol*Iobr70+Btsol-25)/10.012 ;
+Y1t=0.09988*Tobr25-2.497 ;
+Y2t=0.09988*Tobr70-2.497 ;
+
+Kt=UrovnK(X1t,X2t,Y1t,Y2t );
+Bt=UrovnB(X1t,X2t,Y1t,Y2t );
+
+Ktmp=Kt*K;
+Btmp=Bt+B;
+	
+//	K= Number(Obiekt.TK0.value);
+//	B= Number(Obiekt.TB0.value);
+//Kish=UrovnK(Obiekt.I25.value,Obiekt.I70.value,Obiekt.T25.value,Obiekt.T70.value);
+//Bish=UrovnB(Obiekt.I25.value,Obiekt.I70.value,Obiekt.T25.value,Obiekt.T70.value);
+//X11=((Kish*I1+Bish-25)/10.012) ;
+//X22=((Kish*I2+Bish-25)/10.012) ;
+//Y11=(0.09988*Obiekt.T25.value-2.497) ;
+//Y22=(0.09988*Obiekt.T70.value-2.497) ;
+
+//Kh=UrovnK(X11,X22,Y11,Y22 )*K;
+//Bh=UrovnB(X11,X22,Y11,Y22)+B;
+Obiekt.Bq.value = Btmp.toFixed(4);
+Obiekt.Kq.value = Ktmp.toFixed(4);
+//Obiekt.Bq.value = Bish;
+//Obiekt.Kq.value = Kish;
+//Kish=UrovnK(I25,I70,T25,T70);
+//Bish=UrovnB(I25,I70,T25,T70);
+};
+
+
+function RaschS(Obiekt) {
+// Диапазоны
+K= Number(Obiekt.SK0.value);
+B= Number(Obiekt.SB0.value);
+	X11=Number(Obiekt.SminT25.value) ;
+	X22=Number(Obiekt.SmaxT70.value) ;
+	Y11=Number(Obiekt.SOminT25.value)  ;
+	Y22=Number(Obiekt.SOmaxT70.value) ;
+
+	Kish=UrovnK(X11,X22,Y11,Y22 );
+	Bish=UrovnB(X11,X22,Y11,Y22 );
+
+
+	Kh=Kish;
+	Bh=Bish/Obiekt.Diapazon.value;
+		switch (Obiekt.Diapazon.value) {
+		case "0.593" :
+			Bh=Bh+0.0005;
+		break;
+		
+			case "3.24" :
+			Bh=Bh+0.001;
+		break;
+			case "5.803" :
+			Bh=Bh+0.003;
+		break;
+			case "45.5" :
+			Bh=Bh+0.005;
+		break;
+			case "121" :
+			Bh=Bh+0.006;
+		break;
+	default : 
+		alert( "Косяк с корректировкой!!!" );
+
+};
+Bh=Bh+B;
+Kh=Kh*K;
+Obiekt.Bq.value = Bh.toFixed(4);
+Obiekt.Kq.value = Kh.toFixed(4);
+//Obiekt.Bq.value = Bish;
+//Obiekt.Kq.value = Kish;
+//Kish=UrovnK(I25,I70,T25,T70);
+//Bish=UrovnB(I25,I70,T25,T70);
+};
+function RaschTM(Obiekt1) {
+// Хорошо.
+K= Number(Obiekt1.TMK0.value);
+B= Number(Obiekt1.TMB0.value);
+Tobr25=Number(Obiekt1.TMO25.value);
+Tobr70=Number(Obiekt1.TMO70.value);
+Tsol25=Number(Obiekt1.TM25.value);
+Tsol70=Number(Obiekt1.TM70.value);
+
+Iobr25=Tobr25+273.2 ;
+Iobr70=Tobr70+273.2 ;
+Ktsol=(Tsol70-Tsol25)/(Iobr70-Iobr25) ;
+Btsol=Tsol25-Ktsol*Iobr25 ;
+
+
+X1t=(Ktsol*Iobr25+Btsol-25)/10.012 ;
+X2t=(Ktsol*Iobr70+Btsol-25)/10.012 ;
+Y1t=0.09988*Tobr25-2.497 ;
+Y2t=0.09988*Tobr70-2.497 ;
+
+Kt=UrovnK(X1t,X2t,Y1t,Y2t );
+Bt=UrovnB(X1t,X2t,Y1t,Y2t );
+
+Ktmp=Kt*K;
+Btmp=Bt+B;
+Obiekt1.Btm.value = Btmp.toFixed(4);
+Obiekt1.Ktm.value = Ktmp.toFixed(4);
+};
+function PodDAC(Obiekt) {
+  // Диапазоны
+	switch (Obiekt.Kb.value) {
+	case "2.050002" :
+			Obiekt.SOmin.value=0.2 ;
+			Obiekt.SOmax.value=2 ;
+			
+			Obiekt.UIOmin.value=1 ;
+			Obiekt.UIOmax.value=10 ;
+			
+		break;
+			case "2.05" :
+			Obiekt.SOmin.value=1 ;
+			Obiekt.SOmax.value=10 ;
+			
+			Obiekt.UIOmin.value=1 ;
+			Obiekt.UIOmax.value=10 ;
+			
+		break;
+			case "2.287" :
+			Obiekt.SOmin.value=2 ;
+			Obiekt.SOmax.value=20 ;
+			Obiekt.UIOmin.value=1 ;
+			Obiekt.UIOmax.value=10 ;
+		break;
+			case "1.985" :
+			Obiekt.SOmin.value=10 ;
+			Obiekt.SOmax.value=100 ;
+			Obiekt.UIOmin.value=1 ;
+			Obiekt.UIOmax.value=10 ;
+		break;
+			case "0.1" :
+			Obiekt.SOmin.value=40 ;
+			Obiekt.SOmax.value=400 ;
+			Obiekt.UIOmin.value=5.6 ;
+			Obiekt.UIOmax.value=20 ;
+		break;
+	default : 
+		alert( "Косяк с подстановкой!!!" );
+
+};
+
+};
+function RaschX(ObiektX) {
+// Хорошо???
+		switch (ObiektX.Diapazon.value) {
+			case "1" :
+			Kus=9.260;
+			CD=1;
+		break;
+			case "2" :
+			Kus=7.378;
+			CD=1;
+		break;
+			case "4" :
+			Kus=3.805;
+			CD=1;
+		break;
+			case "10" :
+			Kus=9.260;
+			CD=10;
+		break;
+			case "20" :
+			Kus=7.378;
+			CD=10;
+		break;
+		case "40" :
+			Kus=3.805;
+			CD=10;
+		break;
+		case "100" :
+			Kus=9.260;
+			CD=100;
+		break;
+		case "400" :
+			Kus=3.805;
+			CD=100;
+		break;
+	default : 
+		alert( "Косяк с корректировкой!!!" );
+
+};
+
+
+Ks0= Number(ObiektX.Ks0f.value);
+Bs0= Number(ObiektX.Bs0f.value);
+Xe1=100/CD*Number(ObiektX.Xe1f.value);
+Xe2=100/CD*Number(ObiektX.Xe2f.value);
+Xs1=100/CD*Number(ObiektX.Xs1f.value);
+Xs2=100/CD*Number(ObiektX.Xs2f.value);
+
+
+
+ Bs=(Xs1*Kus*Xe2-1000*Bs0*Xe2-Xs2*Kus*Xe1+1000*Bs0*Xe1)/(1000*(Xs1-Xs2)) ;
+Ks=(Ks0*(Kus*Xe1-1000*Bs))/(Kus*Xs1-1000*Bs0) ;
+ObiektX.Bsf.value = Bs.toFixed(4);
+ObiektX.Ksf.value = Ks.toFixed(4);
+};
+
+function RaschSNew(Obiekt) {
+// Диапазоны
+K= Number(Obiekt.SK0.value);
+B= Number(Obiekt.SB0.value);
+	Smin=Number(Obiekt.SminT25.value) ;
+	Smax=Number(Obiekt.SmaxT70.value) ;
+	SOmin=Number(Obiekt.SOminT25.value)  ;
+	SOmax=Number(Obiekt.SOmaxT70.value) ;
+Tmin=Number(Obiekt.TSmin.value);
+Tmax=Number(Obiekt.TSmax.value) ;
+Kdsol=Number(Obiekt.Kdsol.value);
+Kdtab=Number(Obiekt.Kdtab.value);
+// Пытаемся применять расчет по Х 
+	
+switch (Obiekt.Diapazon.value) {
+			case "1" :
+			Kus=9.260;
+			CD=1;
+		break;
+			case "2" :
+			Kus=7.378;
+			CD=1;
+		break;
+			case "4" :
+			Kus=3.805;
+			CD=1;
+		break;
+			case "10" :
+			Kus=9.260;
+			CD=10;
+		break;
+			case "20" :
+			Kus=7.378;
+			CD=10;
+		break;
+		case "40" :
+			Kus=3.805;
+			CD=10;
+		break;
+		case "100" :
+			Kus=9.260;
+			CD=100;
+		break;
+		case "400" :
+			Kus=7.378;
+			CD=100;
+		break;
+	default : 
+		alert( "Косяк с корректировкой!!!" );
+
+};
+
+Ks0= K;
+Bs0= B;
+
+Xs1f= XfS(Smin,Tmin,Kdsol);
+Xs2f= XfS(Smax,Tmax,Kdsol) ;
+Xe1f= XfS(SOmin,Tmin,Kdtab);
+Xe2f= XfS(SOmax,Tmax,Kdtab);
+
+Xe1=100/CD*Xe1f;
+Xe2=100/CD*Xe2f;
+Xs1=100/CD*Xs1f;
+Xs2=100/CD*Xs2f;
+
+ Bs=(Xs1*Kus*Xe2-1000*Bs0*Xe2-Xs2*Kus*Xe1+1000*Bs0*Xe1)/(1000*(Xs1-Xs2)) ;
+Ks=(Ks0*(Kus*Xe1-1000*Bs))/(Kus*Xs1-1000*Bs0) ;
+	
+Bh=111;
+Kh=K;
+Obiekt.Bq.value = Bh.toFixed(4);
+Obiekt.Kq.value = Kh.toFixed(4);
+//Obiekt.Bq.value = Bish;
+//Obiekt.Kq.value = Kish;
+//Kish=UrovnK(I25,I70,T25,T70);
+//Bish=UrovnB(I25,I70,T25,T70);
+};
+</SCRIPT>
+</head>
+<body>
+<noscript> <h2 style="color:red"> JavaScript отключен, <br> расчет не возможен.</h2> </noscript> 
+Версия от 4 апреля 2017г..
+<div id="tabs">
+<ul>
+<li><a href="#tabs-1">Т на магазинах</a></li>
+<li><a href="#tabs-2">Расчет S.</a></li>
+<li><a href="#tabs-3">Расчет DAC.</a></li>
+<li><a href="#tabs-4">Т на мокрую</a></li>
+<li><a href="#tabs-5">Расчет по X</a></li>
+<li><a href="#tabs-6">Расчет S новое</a></li>
+</ul>
+<div id="tabs-1">
+<br>
+<br>
+
+<form name="RasT" >
+<table border=2 >
+<pre>
+
+<tr> <td colspan=4> <h3>Что было в приборе. (Channel 0) </h3></td>    </tr>
+<tr> <td> B0 </td> <td colspan=3> <input type="text" size="8" name="TB0" size="8" Value=0> </td>   </tr>
+<tr> <td> K0  </td> <td colspan=3 >  <input type="text" size="8" name="TK0" size="8" Value="1">  </td>   </tr>
+
+<tr> <td colspan=2> <h4>Показания солемера.</h4></td>   <td colspan=2 ><h4>Показания амперметра, мкА</h4> </td> </tr>
+<tr> <td> T25</td> <td> <input type="text" name="T25" size="8" Value=25> </td>  <td> I25 </td> 
+<td>  <input type="text" name="I25" size="8" Value="298.2"></td> </tr>
+
+<tr> <td> T70   </td> <td>  <input type="text" size="8" name="T70"  Value="70"> </td> 
+ <td> I70 </td> <td>  <input type="text" size="8" name="I70" Value="343.2"> </td> </tr>
+
+<tr> <td colspan=4> <input type="button" name="ras"  value="Расчитать."
+    onClick="RaschT(this.form)" ></td> </tr>
+<tr> <td colspan=4>
+<h3> Результаты.</h3>
+<tr> <td colspan=2>Значение B </td> <td colspan=2>  <input type="text" size="8" name="Bq" > </td> </tr>
+<tr> <td colspan=2>Значение K </td> <td colspan=2> <input type="text" size="8" name="Kq" > </td> </tr>
+</pre>
+
+</table>
+</form>
+<br> <br> <br>
+<h3> Читай меня!!! </h3>
+
+<h5>Установить ток в районе 298 мкА</h5> 
+T25 - ввести фактические показания солемера<br>
+I25  - ввестии фактические показания амперметра<br>
+<h5>Установить ток в районе 343мкА</h5>
+T70  - ввести фактические показания солемера<br>
+I70 - ввестии фактические показания амперметра  <br> <br> <br>
+
+
+
+</div>
+<div id="tabs-2">
+
+<br> <br>
+<h3> Расчет по Х - дает лучший результат.</h3>
+<br> <br>
+<table border=2 >
+<form name="RasS" >
+<pre>
+<tr> <td><h3>Выбор диапазона:</h3> </td> <td>
+<select name="Diapazon">
+		<option value="0.593">0.2-2</option>
+        <option value="3.24">1-10</option>
+        <option value="5.803">2-20</option>
+        <option value="45.5">10-100</option>
+        <option value="121">40-400</option>
+    </select>
+</td> </tr>
+<tr> <td colspan=4> <h3>Что было в приборе. (Channel 1) </h3></td>    </tr>
+<tr> <td> B0 </td> <td colspan=3> <input type="text" size="8" name="SB0" size="8" Value=0> </td>   </tr>
+<tr> <td> K0  </td> <td colspan=3 >  <input type="text" size="8" name="SK0" size="8" Value="1">  </td>   </tr>
+<tr> <td colspan=2> <h3>Показания солемера по соли.</h3></td> </tr> 
+<tr> <td>Smin <input type="text" size="8" name="SminT25" Value=1></td> <td>- низкая соль.</td> </tr>
+<tr> <td>Smax <input type="text" size="8" name="SmaxT70" Value="2"> </td> <td> -  высокая соль.</td> </tr>
+<tr> <td colspan=2 ><h3>Образцовые данные (показания).</h3> </td> </tr>
+<tr> <td>Smin <input type="text" size="8" name="SOminT25" Value=1> </td> <td>-  низкая соль.</td> </tr>
+<tr> <td>Smax <input type="text" size="8" name="SOmaxT70" Value="2"> </td> <td>-  высокая соль. </td> </tr>
+<tr> <td colspan=2><input type="button" name="ras"  value="Расчитать."    onClick="RaschS(this.form)" ></td> </tr>
+<tr> <td colspan=2>
+<h3> Результаты.</h3>
+<tr> <td>Значение B </td> <td><input type="text" size="8" name="Bq" > </td> </tr>
+<tr> <td>Значение K </td> <td> <input type="text" size="8" name="Kq" > </td> </tr>
+</pre>
+</form>
+</table>
+
+<h3>Читай меня!</h3>
+<p>1. Корректировка В, в зависимости от диапазона (уже введена).</p>
+<p>для диапазона "1-10" - +0.001.<br>
+для диапазона "1-10" - +0.003.<br>
+для диапазона "1-10" - +0.005.<br>
+для диапазона "10-100" - +0.006. </p>
+</div>
+<div id="tabs-3">
+<br> <br><br>
+<h3> Расчет коэффициентов для канала DAC. </h3>
+<h3> Выбор диапазона выбирает корректировку В, если нет диапазона можно посчитать К и подобрать В. </h3>
+<table border=2 >
+<form name="RasDAC" >
+<pre>
+<tr> <td colspan=2><h3>Выбор диапазона:</h3> </td> <td colspan=2>
+<select name="Kb" onClick="PodDAC(this.form)" >
+
+		<option value="2.050002">0.2-2 напряжение</option>
+        <option value="2.05">1-10 напряжение</option>
+        <option value="2.287">2-20 напряжение</option>
+        <option value="1.985">10-100 напряжение</option>
+        <option value="0.1"> 40-400 ток</option>
+    </select>
+</td> </tr>
+
+<tr> <td colspan=2> <h3>Что было в приборе.</h3></td>  
+ <td colspan=2 ><h3>Что хотим получать.</h3> </td> </tr>
+<tr> <td>Smin </td> <td><input type="text" size="8" name="Smin" Value=10.071></td>
+ <td>SOmin </td> <td> <input type="text" size="8" name="SOmin" Value=10></td> </tr>
+
+<tr> <td>Smax  </td> <td> <input type="text" size="8" name="Smax" Value="100.208"></td> 
+ <td>SOmax  </td> <td><input type="text" size="8" name="SOmax" Value="100"> </td> </tr>
+
+<tr> <td colspan=2> <h3>Что было на выходе.</h3></td>  
+ <td colspan=2 ><h3>Что хотим получать на выходе.</h3> </td> </tr>
+<tr> <td>UImin </td> <td><input type="text" size="8" name="UImin" Value=0.81></td>
+ <td>UIOmin </td> <td> <input type="text" size="8" name="UIOmin" Value=1></td> </tr>
+
+<tr> <td>UImax  </td> <td> <input type="text" size="8" name="UImax" Value="8.87"></td> 
+ <td>UIOmax  </td> <td><input type="text" size="8" name="UIOmax" Value="10"> </td> </tr>
+
+<tr> <td colspan=4><input type="button" name="ras"  value="Расчитать."    onClick="RaschDAC(this.form)" ></td> </tr>
+<tr> <td colspan=4>
+<h3> Результаты.</h3>
+<tr> <td colspan=2>Корректировка по B </td> <td colspan=2><input type="text" size="8" name="Bq" > </td> </tr>
+<tr> <td colspan=2>Корректировка по K </td> <td colspan=2> <input type="text" size="8" name="Kq" > </td> </tr>
+</pre>
+</form>
+</table>
+
+<h3>Читай меня!</h3>
+<p>1. Выбор диапазона выбирает корректировку В, если нет диапазона можно посчитать К и подобрать В. </p>
+<p>2.Установить B=0, K=1.</p>
+</div>
+
+<div id="tabs-4">
+
+<br> <br> <br>
+<h3> Расчет коэффициентов для канала температуры. </h3>
+
+<form name="RasTM" >
+<table border=2 >
+<pre>
+
+<tr> <td colspan=4> <h3>Что было в приборе. (Channel 0)</h3></td>    </tr>
+<tr> <td>B0 </td> <td colspan=3> <input type="text" size="8" name="TMB0" Value=0> </td>   </tr>
+<tr> <td>K0  </td> <td colspan=3 >  <input type="text" size="8" name="TMK0" Value="1">  </td>   </tr>
+
+<tr> <td colspan=2> <h4>Показания солемера.</h4></td>   <td colspan=2 ><h4>Образцовые показания.</h4> </td> </tr>
+<tr> <td>T25</td> <td> <input type="text" name="TM25" size="8" Value=25></td>  <td>T25обр. </td> 
+<td>  <input type="text" name="TMO25" size="8" Value="25"></td> </tr>
+
+<tr> <td>T70   </td> <td>  <input type="text" name="TM70" size="8"  Value="70"> </td> 
+ <td>T70обр. </td> <td> <input type="text" name="TMO70" size="8" Value="70"> </td> </tr>
+
+<tr> <td colspan=4> <input type="button" name="ras"  value="Расчитать."     onClick="RaschTM(this.form)" > </td> </tr>
+<tr> <td colspan=4>
+<h3> Результаты.</h3>
+<tr> <td colspan=2>Значение B </td> <td colspan=2> <input type="text" size="8" name="Btm" ></td> </tr>
+<tr> <td colspan=2>Значение K </td> <td colspan=2> <input type="text" size="8" name="Ktm" > </td> </tr>
+</pre>
+
+</table>
+</form>
+</div>
+<div id="tabs-5">
+
+<br> <br> <br>
+<table border=2 >
+<form name="RasX" >
+<pre>
+<tr> <td><h3>Выбор диапазона:</h3> </td> <td>
+<select name="Diapazon">
+		<option value="1">1</option>
+        <option value="2">2</option>
+        <option value="4">4</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="40">40</option>
+        <option value="100">100</option>
+        <option value="400">400</option>
+    </select>
+</td> </tr>
+<tr> <td colspan=4> <h3>Что было в приборе. (Channel 1) </h3></td>    </tr>
+<tr> <td> B0 </td> <td colspan=3> <input type="text" size="8" name="Bs0f" size="8" Value="0.027"> </td>   </tr>
+<tr> <td> K0  </td> <td colspan=3 >  <input type="text" size="8" name="Ks0f" size="8" Value="1.02">  </td>   </tr>
+<tr> <td colspan=2> <h3>Показания солемера по соли.</h3></td> </tr> 
+<tr> <td>Xmin <input type="text" size="8" name="Xs1f" Value="1.79"></td> <td>- Низкая  соль.</td> </tr>
+<tr> <td>Xmax <input type="text" size="8" name="Xs2f" Value="6.867"> </td> <td> - Высокая  соль.</td> </tr>
+<tr> <td colspan=2 ><h3>Образцовые данные (показания).</h3> </td> </tr>
+<tr> <td>Xmin <input type="text" size="8" name="Xe1f" Value="1.918"> </td> <td>- Низкая  соль.</td> </tr>
+<tr> <td>Xmax <input type="text" size="8" name="Xe2f" Value="7.778"> </td> <td>- Высокая  соль. </td> </tr>
+<tr> <td colspan=2><input type="button" name="ras"  value="Расчитать."    onClick="RaschX(this.form)" ></td> </tr>
+<tr> <td colspan=2>
+<h3> Результаты.</h3>
+<tr> <td>Значение B </td> <td><input type="text" size="8" name="Bsf" > </td> </tr>
+<tr> <td>Значение K </td> <td> <input type="text" size="8" name="Ksf" > </td> </tr>
+</pre>
+</form>
+</table>
+
+<h3>Читай меня!</h3>
+<p>1. Выбери диапазон.</p>
+
+</div>
+<div id="tabs-6">
+
+<br> <br>
+<h3> Новое в работе.</h3>
+<br> <br>
+<table border=2 >
+<form name="RasS" >
+<pre>
+<tr> <td><h3>Выбор диапазона:</h3> </td> <td>
+		<select name="Diapazon">
+			<option value="1">1</option>
+			<option value="2">2</option>
+			<option value="4">4</option>
+			<option value="10">10</option>
+			<option value="20">20</option>
+			<option value="40">40</option>
+			<option value="100">100</option>
+			<option value="400">400</option>
+		</select>
+</td> </tr>
+<tr> <td colspan=4> <h3>Что было в приборе. (Channel 1) </h3></td>    </tr>
+<tr> <td> B0 </td> <td colspan=3> <input type="text" size="8" name="SB0" size="8" Value=0> </td>   </tr>
+<tr> <td> K0  </td> <td colspan=3 >  <input type="text" size="8" name="SK0" size="8" Value="1">  </td>   </tr>
+<tr> <td colspan=2> <h3>Показания солемера по соли.</h3></td> </tr> 
+<tr> <td>T_Smin <input type="text" size="8" name="TSmin" Value=1></td> <td>- Температура<br> при низкой соли.</td> </tr>
+<tr> <td>T_Smax <input type="text" size="8" name="TSmax" Value="2"> </td> <td> - Температура <br>при высокой соли.</td> </tr>
+<tr> <td colspan=2> <h3>Показания солемера по соли.</h3></td> </tr> 
+<tr> <td>Kd <input type="text" size="8" name="Kdsol" Value=1></td> <td>- из солемера.</td> </tr>
+<tr> <td>Smin <input type="text" size="8" name="SminT25" Value=1></td> <td>- низкая соль.</td> </tr>
+<tr> <td>Smax <input type="text" size="8" name="SmaxT70" Value="2"> </td> <td> -  высокая соль.</td> </tr>
+<tr> <td colspan=2 ><h3>Образцовые данные (показания).</h3> </td> </tr>
+<tr> <td>Kd <input type="text" size="8" name="Kdtab" Value=1></td> <td>- из таблицы.</td> </tr>
+<tr> <td>Smin <input type="text" size="8" name="SOminT25" Value=1> </td> <td>-  низкая соль.</td> </tr>
+<tr> <td>Smax <input type="text" size="8" name="SOmaxT70" Value="2"> </td> <td>-  высокая соль. </td> </tr>
+<tr> <td colspan=2><input type="button" name="ras"  value="Расчитать."    onClick="RaschSNew(this.form)" ></td> </tr>
+<tr> <td colspan=2>
+<h3> Результаты.</h3>
+<tr> <td>Значение B </td> <td><input type="text" size="8" name="Bq" > </td> </tr>
+<tr> <td>Значение K </td> <td> <input type="text" size="8" name="Kq" > </td> </tr>
+</pre>
+</form>
+</table>
+
+<h3>Читай меня!</h3>
+1. Корректировка В, в зависимости от диапазона 
+</div>
+
+
+</div>
+</body>
+</html>

@@ -1,0 +1,210 @@
+
+  u_min = !!!
+	   u_max = !!!
+	     //Необходимая шкала ЦАП по току
+
+  //Необходимая шкала ЦАП по напряжению 
+  dac_u_min = 0.0;
+  dac_u_max = 10.0;//Реальная шкала ЦАП по напряжению 0..12В
+ s1 = s - s_min;
+volt = dac_u_min + d1*s1
+
+d1 = (dac_u_max - dac_u_min) / (s_max - s_min);
+
+dac = ((CONVERT_VOLT(volt) + adc1_ctl[3].offset) * (double)adc1_ctl[3].amp) / (1024.0*1024.0); 
+
+ CONVERT_VOLT(X) ((short)((16383.0 / 12.0) * (double)(X)))
+  
+  adc1_ctl[3].amp = CONVERT_K(k);
+   
+   CONVERT_K(K)=(K * 1024.0 * 1024.0 + 0.5)
+   
+   печать коэф  FCONVERT_CUR(adc1_ctl[3].offset), FCONVERT_K(adc1_ctl[3].amp));
+   
+     adc1_ctl[3].amp = CONVERT_K(k);
+     
+    adc1_ctl[3].offset = CONVERT_CUR(b); 
+
+ CONVERT_VOLT(X) = ((16383.0 / 12.0) * X)
+
+
+ FCONVERT_VOLT(X) = ((12.0 / 16383.0) * X
+   
+ 
+   По напряжению
+ 
+   s1 = s - s_min;
+   
+d1 = (dac_u_max - dac_u_min) / (s_max - s_min); 
+
+volt = dac_u_min + d1*s1
+
+   dac = ((16383.0  *volt/ 12.0 + ((16383.0 / 24.0) * B)) * (K * 1024.0 * 1024.0 + 0.5)) / (1024.0*1024.0); 
+
+ CONVERT_VOLT(volt) = ((16383.0 / 12.0) * volt)=volt*16383.0 / 12.0
+ adc1_ctl[3].offset = CONVERT_CUR(B);
+  CONVERT_CUR(B) = ((16383.0 / 24.0) * B)=B*16383.0 / 24.0
+  adc1_ctl[3].amp = CONVERT_K(K)=(K * 1024.0 * 1024.0 + 0.5);
+
+dac = ((volt*16383.0 / 12.0 + B*16383.0 / 24.0) * (K * 1024.0 * 1024.0 + 0.5)) / (1024.0*1024.0);
+
+
+dac=9.5367431640625*10^-7*(682.625*B+1365.25*volt)*(1048576.0*K+0.5)
+
+A=9.5367431640625*10^-7
+C=682.625
+H=1365.25
+D=1048576.0
+
+ dac=A*(C*B+H*volt)*(D*K+0.5)  
+   
+   
+   Система уровнений
+   U0max=10 
+   U0min=1
+   S0max
+   S0min
+   Ssmax
+   Ssmin
+   Usmax
+   Usmin
+   ------------
+   volt_S0max
+   volt_S0min
+   volt_Ssmax
+   volt_Ssmin
+   
+   
+ur1:dac_S0max=A*(C*Bs+H*volt_S0max)*(D*Ks+0.5);
+ur2:dac_S0min=A*(C*Bs+H*volt_S0min)*(D*Ks+0.5);
+ur3:dac_Ssmax=A*(C*B0+H*volt_Ssmax)*(D*K0+0.5);
+ur4:dac_Ssmin=A*(C*B0+H*volt_Ssmin)*(D*K0+0.5);
+ur5:U0max/Usmax=dac_S0max/dac_Ssmax;
+ur6:U0min/Usmin=dac_S0min/dac_Ssmin;
+solve([ur1,ur2,ur3,ur4,ur5,ur6], [Ks,Bs,dac_S0max,dac_S0min,dac_Ssmax,dac_Ssmin]);
+   
+   
+ur5:A=9.5367431640625*10^-7;
+ur6:C=682.625;
+ur7:D=1048576.0;
+H=1365.25
+ur1:dac_S0max=9.5367431640625*10^-7*(682.625*Bs+1365.25*volt_S0max)*(1048576.0*Ks+0.5);
+ur2:dac_S0min=9.5367431640625*10^-7*(682.625*Bs+1365.25*volt_S0min)*(1048576.0*Ks+0.5);
+ur3:dac_Ssmax=9.5367431640625*10^-7*(682.625*B0+1365.25*volt_Ssmax)*(1048576.0*K0+0.5);
+ur4:dac_Ssmin=9.5367431640625*10^-7*(682.625*B0+1365.25*volt_Ssmin)*(1048576.0*K0+0.5);
+ur5:U0max/Usmax=dac_S0max/dac_Ssmax;
+ur6:U0min/Usmin=dac_S0min/dac_Ssmin;
+solve([ur1,ur2,ur3,ur4,ur5,ur6], [Ks,Bs,dac_S0max,dac_S0min,dac_Ssmax,dac_Ssmin]);
+
+
+[[Ks=((U0min*Usmax-U0max*Usmin)*B0+(2097152*U0min*Usmax-2097152*U0max*Usmin)*B0*K0+
+2*Usmax*Usmin*volt_S0max-2*Usmax*Usmin*volt_S0min+(-4194304*U0max*Usmin*K0-2*U0max*Usmin)*
+volt_Ssmax+(4194304*U0min*Usmax*K0+2*U0min*Usmax)*volt_Ssmin)/(4194304*Usmax*Usmin*
+volt_S0min-4194304*Usmax*Usmin*volt_S0max),
+
+Bs=-(2*U0min*Usmax*B0*volt_S0max-2*U0max*Usmin*
+B0*volt_S0min-4*U0max*Usmin*volt_S0min*volt_Ssmax+4*U0min*Usmax*volt_S0max*volt_Ssmin)/(2*
+U0min*Usmax*volt_Ssmin-2*U0max*Usmin*volt_Ssmax+(U0min*Usmax-U0max*Usmin)*B0),
+
+dac_S0max=
+(5461*U0max*B0+11452547072*U0max*B0*K0+(22905094144*U0max*K0+10922*U0max)*volt_Ssmax)/(16777216*Usmax),
+dac_S0min=
+(5461*U0min*B0+11452547072*U0min*B0*K0+(22905094144*U0min*K0+10922*U0min)*volt_Ssmin)/(16777216*Usmin),
+dac_Ssmax=
+(5461*B0+11452547072*B0*K0+(22905094144*K0+10922)*volt_Ssmax)/16777216,
+dac_Ssmin=
+(5461*B0+11452547072*B0*K0+(22905094144*K0+10922)*volt_Ssmin)/16777216]]
+
+   
+ 
+   //для тока
+     cur_min = 4.0;
+  cur_max = 20.0;//Реальная шкала ЦАП по току 0..24mA 
+   current = cur_min + d1*s1;
+     CONVERT_CUR(B) = ((16383.0 / 24.0) * B)
+      
+   adc1_ctl[3].offset=((16383.0 / 24.0) * B)
+     adc1_ctl[3].offset = CONVERT_CUR(b);
+     
+     current = cur_min + d1*s1;  
+  
+   dac = (short)(((double)(CONVERT_CUR(current) + adc1_ctl[3].offset) * (double)adc1_ctl[3].amp) / (1024.0*1024.0));
+
+
+  dac = ((CONVERT_CUR(current) + adc1_ctl[3].offset) * (double)adc1_ctl[3].amp) / (1024.0*1024.0)
+
+   adc1_ctl[3].offset= CONVERT_CUR(b)=(16383.0* B / 24.0) 
+ CONVERT_CUR(current) (((16383.0 / 24.0) * current)) =current*16383.0 / 24.0
+ adc1_ctl[3].amp = CONVERT_K(K)=(K * 1024.0 * 1024.0 + 0.5)
+ 
+ dac = ((current*16383.0 / 24.0 + 16383.0* B / 24.0) * (K * 1024.0 * 1024.0 + 0.5)) / (1024.0*1024.0)
+ 
+dac=9.5367431640625*10^-7*(682.625*B+682.625*current)*(1048576.0*K+0.5)
+
+
+
+ur1:dac_S0min=9.5367431640625*10^-7*(682.625*Bdac+682.625*current_S0min)*(1048576.0*Kdac+0.5);
+ur2:dac_S0max=9.5367431640625*10^-7*(682.625*Bdac+682.625*current_S0max)*(1048576.0*Kdac+0.5);
+ur3:dac_Ssmin=9.5367431640625*10^-7*(682.625*B0+682.625*current_Ssmin)*(1048576.0*K0+0.5);
+ur4:dac_Ssmax=9.5367431640625*10^-7*(682.625*B0+682.625*current_Ssmax)*(1048576.0*K0+0.5);
+ur5:I0max/Ismax=dac_S0max/dac_Ssmax;
+ur6:I0min/Ismin=dac_S0min/dac_Ssmin;
+solve([ur1,ur2,ur3,ur4,ur5,ur6], [Kdac,Bdac,dac_S0max,dac_S0min,dac_Ssmax,dac_Ssmin]);
+
+
+[[Kdac=((I0min*Ismax-I0max*Ismin)*B0+Ismax*Ismin*current_S0max-Ismax*Ismin*
+current_S0min-I0max*Ismin*current_Ssmax+I0min*Ismax*current_Ssmin+(2097152*I0min*Ismax*
+current_Ssmin-2097152*I0max*Ismin*current_Ssmax+(2097152*I0min*Ismax-2097152*I0max*Ismin)*
+B0)*K0)/(2097152*Ismax*Ismin*current_S0min-2097152*Ismax*Ismin*current_S0max),
+
+Bdac=-(I0min*Ismax*B0*current_S0max-I0max*Ismin*B0*current_S0min-I0max*Ismin*current_S0min*
+current_Ssmax+I0min*Ismax*current_S0max*current_Ssmin)/(I0min*Ismax*current_Ssmin-I0max*
+Ismin*current_Ssmax+(I0min*Ismax-I0max*Ismin)*B0),dac_S0max=
+(5461*I0max*B0+5461*I0max*current_Ssmax+(11452547072*I0max*current_Ssmax+11452547072*I0max*B0)*K0)/(16777216*Ismax),
+
+
+dac_S0min=
+(5461*I0min*B0+5461*I0min*current_Ssmin+(11452547072*I0min*current_Ssmin+11452547072*I0min*B0)*K0)/(16777216*Ismin),
+dac_Ssmax=(5461*B0+5461*current_Ssmax+(11452547072*current_Ssmax+11452547072*B0)*K0)/16777216,
+
+dac_Ssmin=
+(5461*B0+5461*current_Ssmin+(11452547072*current_Ssmin+11452547072*B0)*K0)/16777216]]
+
+
+ur1:16383.0-dac_S0min=9.5367431640625*10^-7*(682.625*Bdac+682.625*current_S0min)*(1048576.0*Kdac+0.5);
+ur2:16383.0-dac_S0max=9.5367431640625*10^-7*(682.625*Bdac+682.625*current_S0max)*(1048576.0*Kdac+0.5);
+ur3:16383.0-dac_Ssmin=9.5367431640625*10^-7*(682.625*B0+682.625*current_Ssmin)*(1048576.0*K0+0.5);
+ur4:16383.0-dac_Ssmax=9.5367431640625*10^-7*(682.625*B0+682.625*current_Ssmax)*(1048576.0*K0+0.5);
+ur5:I0max/Ismax=dac_S0max/dac_Ssmax;
+ur6:I0min/Ismin=dac_S0min/dac_Ssmin;
+solve([ur1,ur2,ur3,ur4,ur5,ur6], [Kdac,Bdac,dac_S0max,dac_S0min,dac_Ssmax,dac_Ssmin]);
+
+
+Kdac=(-50331648*I0min*Ismax+50331648*I0max*Ismin+(I0min*Ismax-I0max*Ismin)*B0+
+Ismax*Ismin*current_S0max-Ismax*Ismin*current_S0min-I0max*Ismin*current_Ssmax+I0min*Ismax*
+current_Ssmin+(2097152*I0min*Ismax*current_Ssmin-2097152*I0max*Ismin*current_Ssmax+
+(2097152*I0min*Ismax-2097152*I0max*Ismin)*B0)*K0)/(2097152*Ismax*Ismin*current_S0min-
+2097152*Ismax*Ismin*current_S0max),
+
+Bdac=-((I0min*Ismax*B0+50331648*Ismax*Ismin-50331648*I0min*Ismax)*current_S0max+
+((50331648*I0max-50331648*Ismax)*Ismin-I0max*Ismin*B0)*current_S0min-I0max*Ismin*
+current_S0min*current_Ssmax+I0min*Ismax*current_S0max*current_Ssmin+(2097152*I0min*Ismax*
+current_S0max*current_Ssmin-2097152*I0max*Ismin*current_S0min*current_Ssmax-2097152*I0max*
+Ismin*B0*current_S0min+2097152*I0min*Ismax*B0*current_S0max)*K0)/((
+(2097152*I0min*Ismax-2097152*I0max*Ismin)*B0-2097152*I0max*Ismin*current_Ssmax+2097152*I0min
+*Ismax*current_Ssmin)*K0+I0min*Ismax*current_Ssmin-I0max*Ismin*current_Ssmax+
+(I0min*Ismax-I0max*Ismin)*B0+50331648*I0max*Ismin-50331648*I0min*Ismax),
+
+dac_S0max=-(-
+274861129728*I0max+5461*I0max*B0+5461*I0max*current_Ssmax+
+(11452547072*I0max*current_Ssmax+11452547072*I0max*B0)*K0)/(16777216*Ismax),
+
+dac_S0min=-(
+-274861129728*I0min+5461*I0min*B0+5461*I0min*current_Ssmin+
+(11452547072*I0min*current_Ssmin+11452547072*I0min*B0)*K0)/(16777216*Ismin),
+
+dac_Ssmax=-
+(-274861129728+5461*B0+5461*current_Ssmax+(11452547072*current_Ssmax+11452547072*B0)*K0)/16777216,
+
+dac_Ssmin=-
+(-274861129728+5461*B0+5461*current_Ssmin+(11452547072*current_Ssmin+11452547072*B0)*K0)/16777216]]
